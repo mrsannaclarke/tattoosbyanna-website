@@ -1,0 +1,39 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import VisitConnect from '../components/VisitConnect.astro';
+import contactArt from '../assets/contact-line-art.jpg';
+---
+
+<SiteLayout title="Contact — Tattoos by Anna" current="contact">
+  <PageIntro title="Get in touch" description="For general questions, send me a note here. If you’re interested in a tattoo, please use the booking form." artwork={contactArt} artworkAlt="Flower line artwork by Anna Clarke" filter="ink-purple" />
+  <section class="contact-layout page-shell">
+    <div class="contact-main">
+      <form name="general-contact" method="POST" action="/contact-success/" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="general-contact" />
+        <p class="sr-only"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+        <div class="field"><label for="contact-name">Name</label><input id="contact-name" name="name" autocomplete="name" required /></div>
+        <div class="field"><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="contact-subject">Subject</label><input id="contact-subject" name="subject" required /></div>
+        <div class="field"><label for="contact-message">Message</label><textarea id="contact-message" name="message" required></textarea></div>
+        <button class="button" type="submit">Send message</button>
+        <p class="privacy-note">Please don’t include private medical information in this form.</p>
+      </form>
+    </div>
+    <aside class="contact-aside">
+      <VisitConnect />
+      <a href="/booking-form/">Go to booking form <span aria-hidden="true">→</span></a>
+    </aside>
+  </section>
+</SiteLayout>
+
+<style>
+  .contact-layout { padding:48px 0 20px; display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(70px,10vw,150px); }
+  form { display:grid; gap:16px; }
+  form .button { justify-self:start; margin-top:4px; }
+  .privacy-note { margin:0; color:var(--muted); font-size:.8rem; }
+  .contact-aside { display:flex; min-width:0; flex-direction:column; justify-content:center; }
+  .contact-aside>a { margin-top:24px; padding:20px 26px; display:flex; justify-content:center; gap:24px; border-radius:12px; background:var(--accent); color:#fff; font-size:1.2rem; font-weight:600; text-decoration:none; transition:background 160ms ease; }
+  .contact-aside>a:hover { background:var(--accent-dark); }
+  @media(max-width:850px){.contact-layout{grid-template-columns:1fr}.contact-aside{order:-1}.contact-aside :global(img){max-height:380px}}
+</style>

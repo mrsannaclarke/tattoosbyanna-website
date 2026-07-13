@@ -1,0 +1,131 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import introArt from '../assets/payment-intro-line-art.jpg';
+---
+
+<SiteLayout title="Make a payment — Tattoos by Anna" description="Make a secure payment to Tattoos by Anna." current="payment">
+  <PageIntro title="Make a payment" description="Please use this page after we’ve talked about your payment. You can review the details before paying securely through Stripe." artwork={introArt} artworkAlt="Peony line artwork by Anna Clarke" filter="ink-teal" artOpacity={.48} />
+  <section class="payment-layout page-shell" aria-label="Payment form">
+    <div class="payment-panel" aria-labelledby="payment-heading">
+      <div class="payment-intro" id="payment-heading">
+        <p class="payment-guidance">Please only send a payment after we’ve discussed and confirmed the amount together. <a href="#deposit-policy">Read the deposit policy</a>.</p>
+      </div>
+
+      <form id="payment-form" novalidate>
+        <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" placeholder="Your full name" maxlength="120" required /></div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" maxlength="254" required /></div>
+        <div class="field">
+          <label for="amount">Payment amount</label>
+          <div class="money-input"><span aria-hidden="true">$</span><input id="amount" name="amount" type="text" inputmode="decimal" placeholder="0.00" autocomplete="off" required /></div>
+        </div>
+        <fieldset class="tip-fieldset">
+          <legend>Optional tip</legend>
+          <div class="tip-switch" aria-label="Choose how to enter an optional tip">
+            <button type="button" data-tip-mode="percentage" aria-pressed="false">Percentage</button>
+            <button type="button" data-tip-mode="amount" aria-pressed="false">Dollar amount</button>
+          </div>
+          <div class="tip-input" id="tip-input-wrap" hidden><span id="tip-prefix" aria-hidden="true"></span><input id="tip" name="tip" type="text" inputmode="decimal" autocomplete="off" aria-label="Optional tip value" /><span id="tip-suffix" aria-hidden="true"></span></div>
+          <button class="clear-tip" id="clear-tip" type="button" hidden>Remove tip</button>
+        </fieldset>
+        <details class="calculator">
+          <summary>Need a calculator?</summary>
+          <div class="calculator-body">
+            <p>This stays on this screen and isn’t included with your payment.</p>
+            <div class="calculation-row">
+              <input id="calc-first" type="text" inputmode="decimal" aria-label="First number" placeholder="0" />
+              <select id="calc-operation" aria-label="Operation"><option value="multiply">×</option><option value="divide">÷</option><option value="add">+</option><option value="subtract">−</option></select>
+              <input id="calc-second" type="text" inputmode="decimal" aria-label="Second number" placeholder="0" />
+              <span aria-hidden="true">=</span><output id="calc-result" aria-live="polite">0</output>
+            </div>
+          </div>
+        </details>
+        <div class="total-row" aria-live="polite"><span>Total</span><strong id="total">$0.00</strong></div>
+        <p class="form-error" id="form-error" role="alert" hidden></p>
+        <button class="payment-submit" id="submit-button" type="submit"><span>Continue to secure payment</span><span aria-hidden="true">→</span></button>
+        <p class="secure-note">Secure payment powered by Stripe</p>
+      </form>
+    </div>
+  </section>
+  <section class="deposit-policy page-shell" id="deposit-policy" aria-labelledby="deposit-policy-heading">
+    <div class="policy-heading">
+      <h2 id="deposit-policy-heading">Deposit policy for tattoo appointments</h2>
+      <p>A deposit reserves your appointment and protects the time devoted to preparing your tattoo.</p>
+    </div>
+    <div class="policy-copy">
+      <p>To secure an appointment, deposits typically range from $100 to $200 or more depending on the tattoo’s size and complexity. Please confirm your required deposit with Anna before sending payment. Depending on the arrangements you make together, deposits may be paid in person, by phone, through an emailed invoice, or through Venmo, Cash App, or PayPal.</p>
+
+      <h3>Deposit terms</h3>
+      <p><strong>Non-refundable and non-transferable:</strong> Once paid, a deposit cannot be refunded or transferred to another person or artist. It will be applied to the final session of your tattoo.</p>
+      <p><strong>Rescheduling:</strong> Please give Anna at least 72 hours’ notice if you need to reschedule. Insufficient notice may result in the loss of your deposit.</p>
+
+      <h3>When a deposit may be forfeited</h3>
+      <ul>
+        <li><strong>Insufficient rescheduling notice:</strong> Providing less than 72 hours’ notice.</li>
+        <li><strong>Significant design changes:</strong> Changing the subject or requesting multiple alterations that require a full redraw after design development has begun.</li>
+        <li><strong>Tardiness:</strong> Arriving more than 15 minutes late and disrupting other scheduled appointments.</li>
+        <li><strong>Excessive rescheduling:</strong> Repeatedly rescheduling may require a new deposit.</li>
+        <li><strong>Switching artists:</strong> Changing artists after the deposit has been paid.</li>
+        <li><strong>Being unfit to tattoo:</strong> Arriving under the influence, sunburned, or without valid state- or federally-issued photo identification.</li>
+        <li><strong>Extended lapse in contact:</strong> Failing to reschedule or remain in contact for more than three months.</li>
+      </ul>
+
+      <h3>Important notes</h3>
+      <p>Deposits are final, cannot be transferred to another person or artist, and can only be applied to the final session of the agreed tattoo project. They are not refundable.</p>
+      <p>Deposits protect the time, effort, and creativity invested in developing custom artwork. Thank you for understanding and respecting the preparation involved.</p>
+      <p><strong>Questions about the deposit policy?</strong> <a href="/contact/">Contact Anna before sending payment.</a></p>
+    </div>
+  </section>
+  <script is:inline type="module" src="/scripts/payment.js"></script>
+</SiteLayout>
+
+<style>
+  .payment-layout { padding: 58px 0 42px; display:grid; place-items:center; }
+  .payment-panel { width:100%; max-width:680px; }
+  .payment-intro { margin-bottom: 25px; }
+  .payment-intro p { margin:0; line-height:1.5; }
+  .payment-intro .payment-guidance { margin-top:14px; padding:12px 14px; border-left:3px solid var(--accent); background:var(--accent-soft); font-size:.9rem; }
+  .payment-guidance a,.policy-copy a { color:var(--accent); font-weight:600; }
+  #payment-form { display: grid; gap: 17px; }
+  .money-input,.tip-input { display: grid; grid-template-columns: 48px 1fr; align-items: center; border: 1px solid #85817e; border-radius: 2px; overflow: hidden; }
+  .money-input>span,.tip-input>span { height: 45px; display:grid; place-items:center; border-right:1px solid var(--line); font-size:1.1rem; }
+  .money-input input,.tip-input input { border:0; box-shadow:none; }
+  .money-input:focus-within,.tip-input:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent); }
+  .tip-fieldset { border:0; padding:0; margin:0; display:grid; gap:8px; }
+  .tip-fieldset legend { margin-bottom:7px; }
+  .tip-switch { display:grid; grid-template-columns:1fr 1fr; }
+  .tip-switch button { min-height:44px; border:1px solid var(--accent); border-radius:12px; background:var(--white); color:var(--accent); cursor:pointer; }
+  .tip-switch button:last-child { margin-left:-1px; }
+  .tip-switch button[aria-pressed="true"] { background:var(--accent); color:var(--white); }
+  .tip-input { grid-template-columns:48px 1fr 48px; }
+  .tip-input>span:last-child { border:0; border-left:1px solid var(--line); }
+  .tip-input[hidden],.clear-tip[hidden] { display:none; }
+  .clear-tip { justify-self:start; padding:2px 0; border:0; background:transparent; color:var(--muted); font-size:.82rem; text-decoration:underline; cursor:pointer; }
+  .calculator { border-top:1px dashed #8f8a86; border-bottom:1px solid var(--ink); }
+  .calculator summary { padding:14px 3px; color:var(--accent); font-size:.95rem; cursor:pointer; }
+  .calculator-body { padding:0 3px 16px; }
+  .calculator-body p { margin:0 0 10px; color:var(--muted); font-size:.76rem; }
+  .calculation-row { display:grid; grid-template-columns:1fr 54px 1fr 20px 1fr; gap:8px; align-items:center; }
+  .calculation-row input,.calculation-row select { height:40px; padding:0 9px; }
+  .calculation-row output { font:400 1.45rem/1 "Instrument Serif",serif; text-align:right; }
+  .total-row { min-height:63px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--ink); }
+  .total-row>span { font:400 1.85rem/1 "Instrument Serif",serif; }
+  .total-row strong { font:400 3rem/1 "Instrument Serif",serif; }
+  .form-error { margin:0; color:#a10f20; font-size:.9rem; }
+  .payment-submit { min-height:58px; display:flex; align-items:center; justify-content:center; gap:12px; border:0; border-radius:12px; background:var(--accent); color:var(--white); font-size:1.08rem; font-weight:500; cursor:pointer; }
+  .payment-submit:hover { background:var(--accent-dark); }
+  .payment-submit:disabled { opacity:.62; cursor:wait; }
+  .secure-note { margin:-7px 0 0; color:#504c49; font-size:.83rem; text-align:center; }
+  .deposit-policy { margin-top:40px; padding:56px 0; display:grid; grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr); gap:clamp(50px,8vw,120px); border-top:1px solid var(--accent); }
+  .policy-heading h2 { margin:0; font:400 clamp(2.7rem,5vw,4.4rem)/1 "Instrument Serif",serif; }
+  .policy-heading p { max-width:430px; margin:20px 0 0; color:var(--muted); line-height:1.55; }
+  .policy-copy { max-width:780px; }
+  .policy-copy>p:first-child { margin-top:0; font-size:1.08rem; }
+  .policy-copy h3 { margin:36px 0 12px; padding-bottom:9px; border-bottom:1px solid var(--line); font:400 1.9rem/1.1 "Instrument Serif",serif; }
+  .policy-copy p,.policy-copy li { line-height:1.65; }
+  .policy-copy ul { margin:0; padding-left:20px; }
+  .policy-copy li+li { margin-top:9px; }
+  @media(max-width:900px){.payment-layout{width:min(100% - 32px,680px);}}
+  @media(max-width:760px){.deposit-policy{grid-template-columns:1fr;padding:42px 0;gap:30px}}
+  @media(max-width:520px){.calculation-row{grid-template-columns:1fr 48px 1fr}.calculation-row>span{display:none}.calculation-row output{grid-column:1/-1;text-align:left}.total-row strong{font-size:2.55rem}}
+</style>

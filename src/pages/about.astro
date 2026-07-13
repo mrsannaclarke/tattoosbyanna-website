@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import InstagramLink from '../components/InstagramLink.astro';
+import aboutArt from '../assets/about-clay-southworth.png';
+import portrait from '../assets/anna-portrait.jpg';
+---
+
+<SiteLayout title="About Anna — Tattoos by Anna" current="about">
+  <PageIntro title="About Anna Clarke" description="I’ve been tattooing since 2007. I manage Anatomy Tattoo, collect cats, and draw a lot of flowers." artwork={aboutArt} artworkAlt="Citrus and floral line artwork by Anna Clarke" filter="ink-red" />
+  <section class="approach-band">
+    <div class="page-shell approach-inner">
+      <figure class="portrait"><Image src={portrait} alt="Portrait of Anna Clarke" widths={[320,520]} sizes="(max-width: 850px) 70vw, 260px" /></figure>
+      <div class="approach-copy">
+        <p>As a tattoo artist, I prioritize creating a safe and inclusive environment for my clients and strive to ensure that you have the best possible experience during your tattoo session.</p>
+        <p>Artistically, my primary focus is on decorative, botanical, and nature-inspired tattoos and quirky animal portraits. I find beauty in nature and love creating ornamental-style tattoos to complement and enhance the beauty of any body.</p>
+      </div>
+      <div class="about-actions"><a class="button" href="/portfolio/">View portfolio</a><a class="button secondary" href="/booking-form/">Request a tattoo</a><InstagramLink /></div>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .approach-inner { padding:48px 0; display:grid; grid-template-columns:240px minmax(0,1fr) auto; gap:clamp(30px,5vw,70px); align-items:center; }
+  .portrait { margin:0; position:relative; border:7px solid var(--accent); border-radius:50%; overflow:hidden; background:var(--accent); }
+  .portrait::after { content:""; position:absolute; inset:7px; z-index:1; border:1.5px solid var(--accent); border-radius:50%; pointer-events:none; }
+  .portrait :global(picture),.portrait :global(img) { width:100%; height:auto; display:block; }
+  .portrait :global(img) { border:0; border-radius:0; }
+  .approach-copy { display:grid; gap:18px; }
+  .approach-copy p { max-width:760px; margin:0; font:400 clamp(1.3rem,2.1vw,1.8rem)/1.42 "Instrument Serif",serif; }
+  .about-actions { display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:16px; }
+  @media(max-width:1100px){.approach-inner{grid-template-columns:minmax(180px,260px) minmax(0,1fr);padding:36px 0}.about-actions{grid-column:1/-1;justify-content:flex-start}}
+  @media(max-width:560px){.approach-inner{grid-template-columns:1fr}.portrait{width:min(72vw,260px)}.about-actions{grid-column:auto}}
+</style>

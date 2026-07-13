@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import ContactIcons from './ContactIcons.astro';
+import watermark from '../assets/tba-watermark-footer.png';
+
+const { current = '' } = Astro.props;
+---
+
+<div class="footer-area">
+  {current !== 'home' && <ContactIcons />}
+  <footer class="site-footer">
+    <a class="footer-mark" href="/" aria-label="Tattoos by Anna home"><Image src={watermark} alt="" width={80} /></a>
+    <nav aria-label="Footer navigation">
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+      <a href="/portfolio/">Portfolio</a>
+      <a href="/booking-form/">Booking</a>
+      <a href="/release-form/">Release</a>
+      <a href="/payment/">Payment</a>
+    </nav>
+    <p>© 2026 Tattoos by Anna</p>
+  </footer>
+</div>
+
+<style>
+  .footer-area { width:min(1360px,calc(100% - 64px)); margin:42px auto 0; }
+  @media(max-width:820px){.footer-area{width:calc(100% - 32px)}}
+</style>

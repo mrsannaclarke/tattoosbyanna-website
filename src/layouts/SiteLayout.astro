@@ -1,0 +1,58 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+const {
+  title,
+  description = 'Tattoos by Anna — tattoo artist Anna Clarke in Portland, Oregon.',
+  current = '',
+  theme = current,
+  noindex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/png" href="/assets/tba-watermark.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body class={`theme-${theme || 'default'}`}>
+    <svg class="color-filters" aria-hidden="true" focusable="false">
+      <filter id="ink-blue" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".195 .657 .066 0 .082  .167 .561 .057 0 .216  .063 .213 .021 0 .702  0 0 0 1 0" />
+      </filter>
+      <filter id="ink-red" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".050 .168 .017 0 .765  .181 .609 .061 0 .149  .173 .584 .059 0 .184  0 0 0 1 0" />
+      </filter>
+      <filter id="ink-purple" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".116 .390 .039 0 .455  .165 .555 .056 0 .224  .061 .205 .021 0 .714  0 0 0 1 0" />
+      </filter>
+      <filter id="ink-teal" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".206 .693 .070 0 .031  .107 .359 .036 0 .498  .103 .348 .035 0 .514  0 0 0 1 0" />
+      </filter>
+      <filter id="ink-pink" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".038 .129 .013 0 .820  .176 .591 .060 0 .173  .117 .393 .040 0 .451  0 0 0 1 0" />
+      </filter>
+      <filter id="ink-green" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".183 .617 .062 0 .137  .101 .340 .034 0 .525  .168 .564 .057 0 .212  0 0 0 1 0" />
+      </filter>
+      <filter id="ink-orange" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values=".032 .107 .011 0 .851  .123 .415 .042 0 .420  .179 .603 .061 0 .157  0 0 0 1 0" />
+      </filter>
+    </svg>
+    <Header current={current} />
+    <main>
+      <slot />
+    </main>
+    <Footer current={current} />
+  </body>
+</html>

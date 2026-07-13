@@ -1,0 +1,181 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import releaseArt from '../assets/forms-intro-line-art.jpg';
+import bookingArt from '../assets/booking-jenna-intro.png';
+
+const { mode = 'booking' } = Astro.props;
+const isBooking = mode === 'booking';
+const title = isBooking ? 'Booking form' : 'Release form';
+const description = isBooking
+  ? 'Tell me a little about yourself and the tattoo you have in mind. Rough ideas are welcome.'
+  : 'Please complete this release before your appointment. It should only take a few minutes.';
+const artwork = isBooking ? bookingArt : releaseArt;
+
+const consentItems = [
+  ['72.1', 'INFORMED CONSENT', 'I confirm that I have been fully informed of the inherent risks of receiving a tattoo. These include, but are not limited to, the risk of infection, scarring, allergic reactions to pigments or aftercare products, and potential variations in design. Having been informed, I voluntarily agree to proceed with the tattoo procedure and assume all associated risks.'],
+  ['72.2', 'WAIVER OF LIABILITY', 'I waive and release Anatomy Tattoo, its artists, students, and staff to the fullest extent permitted by law from any claims or causes of action for personal injury, including but not limited to risks resulting from the tattoo procedure.'],
+  ['72.3', 'AFTERCARE RESPONSIBILITY', 'I confirm that I have received aftercare instructions and understand my role in caring for the tattoo to prevent infection and ensure proper healing. If touch-up work is required due to my negligence, I agree to cover the cost.'],
+  ['72.4', 'VARIATIONS', 'I understand that Tattoos are a permanent alteration to my skin and may only be removed through costly and potentially disfiguring means. Variations in design and color may occur, and tattoos will naturally fade over time due to sun exposure and pigment dispersion.'],
+  ['72.5', 'CORRECTNESS', 'I take full responsibility for the meaning and accuracy of the text or design I provide or select.'],
+  ['72.6', 'LEGAL AGE', 'I confirm that I am at least 18 years old, have provided valid photo identification, and understand that parental consent does not apply to tattooing in Oregon.'],
+  ['72.7', 'HEALTH DECLARATION', 'I declare that I am not under the influence of drugs or alcohol. I am not pregnant or nursing. I do not have medical conditions (e.g., diabetes, epilepsy, hemophilia) or take medications (e.g., blood thinners) that may interfere with the tattoo or its healing process. If I have any medical concerns, I have consulted a physician prior to proceeding.'],
+  ['72.8', 'PHOTOS', 'I consent to photographs of my tattoo being used for Anatomy Tattoo’s portfolio and promotional purposes.'],
+];
+---
+
+<SiteLayout title={`${title} — Tattoos by Anna`} description={description} current={isBooking ? 'booking' : 'release'} theme={isBooking ? 'booking' : 'release'}>
+  <PageIntro title={title} description={description} artwork={artwork} artworkAlt="Floral line artwork by Anna Clarke" filter={isBooking ? 'ink-orange' : 'ink-green'} />
+  <div class="forms-page page-shell">
+    {isBooking && (
+    <section class="form-panel" id="booking-panel" role="tabpanel">
+      <form class="native-form" data-gravity-form="3" enctype="multipart/form-data">
+        <header><h2>Book your appointment with Anna</h2><p>Tell me about yourself and the tattoo you have in mind.</p></header>
+        <div class="form-grid">
+          <label class="field">First name <span>*</span><input name="input_1.3" autocomplete="given-name" required /></label>
+          <label class="field">Last name <span>*</span><input name="input_1.6" autocomplete="family-name" required /></label>
+          <label class="field">Name you’d like us to call you<input name="input_22" /></label>
+          <label class="field">Pronouns<input name="input_19" /></label>
+          <label class="field">Phone <span>*</span><input name="input_3" type="tel" autocomplete="tel" required /></label>
+          <label class="field">Email <span>*</span><input name="input_2" type="email" autocomplete="email" required /></label>
+          <label class="field">Confirm email <span>*</span><input name="input_2_2" type="email" autocomplete="email" required /></label>
+          <fieldset class="field full"><legend>Are you traveling more than one hour or only in town for certain dates? <span>*</span></legend><div class="choices"><label><input type="radio" name="input_15" value="Yes" required /> Yes</label><label><input type="radio" name="input_15" value="No" /> No</label></div></fieldset>
+          <label class="field full">Project idea <span>*</span><textarea name="input_4" required></textarea></label>
+          <fieldset class="field full"><legend>Is this project a cover-up? <span>*</span></legend><div class="choices"><label><input type="radio" name="input_24" value="yes" required /> Yes</label><label><input type="radio" name="input_24" value="no" /> No</label></div></fieldset>
+          <fieldset class="field full"><legend>I want my tattoo to be</legend><div class="choices"><label><input type="radio" name="input_5" value="Color" /> Color</label><label><input type="radio" name="input_5" value="Blackwork" /> Blackwork</label></div></fieldset>
+          <label class="field full">Where on your body? <span>*</span><small>Include the body part and side, such as “inner right forearm.”</small><input name="input_6" required /></label>
+          <label class="field">Approximate size <small>Describe the size in inches.</small><input name="input_7" /></label>
+          <label class="field">Budget range<input name="input_26" /></label>
+          <label class="field full">Medical issues or accommodations<textarea name="input_21"></textarea></label>
+          <label class="field full">Anything else you’d like to share<textarea name="input_9"></textarea></label>
+          <label class="check full"><input type="checkbox" name="input_20.1" value="I agree" required /><span>I understand that a $100 booking fee is required to secure an appointment. *</span></label>
+          <label class="field full conditional-upload" hidden>Photos of the tattoo being covered <span>*</span><small>Up to five files, 150 MB each.</small><input type="file" name="input_23[]" multiple /></label>
+          <label class="field full">Reference images <small>Optional; up to five files, 150 MB each.</small><input type="file" name="input_25[]" multiple /></label>
+          <label class="field full">How did you hear about us?<select name="input_27"><option value="">Choose one</option>{['facebook','google','instagram','tik tok','our website','pinterest','referred by a friend or family member','referred by a stranger','yelp','other'].map((item) => <option value={item}>{item}</option>)}</select></label>
+        </div>
+        <div class="form-status" role="status" hidden></div>
+        <button class="button" type="submit">Submit booking request</button>
+      </form>
+    </section>
+    )}
+    {!isBooking && (
+    <section class="form-panel" id="release-panel" role="tabpanel">
+      <form class="native-form" data-gravity-form="39" enctype="multipart/form-data">
+        <header><h2>Standard release form</h2><p>Complete this before your appointment. Fields marked * are required.</p></header>
+        <input type="hidden" name="input_69" value="Anna Clarke @tattoosbyanna (She/Her)" />
+        <input type="hidden" name="input_4.6" value="United States" />
+        <div class="form-grid">
+          <h3 class="section-heading">Your information</h3>
+          <label class="field">Legal first name <span>*</span><input name="input_1.3" autocomplete="given-name" required /></label>
+          <label class="field">Legal last name <span>*</span><input name="input_1.6" autocomplete="family-name" required /></label>
+          <label class="field">Preferred name or nickname<input name="input_17.3" /></label>
+          <label class="field">Pronouns<input name="input_74" /></label>
+          <label class="field">Phone <span>*</span><input name="input_5" type="tel" autocomplete="tel" required /></label>
+          <label class="field">Email <span>*</span><input name="input_2" type="email" autocomplete="email" required /></label>
+          <label class="field">Confirm email <span>*</span><input name="input_2_2" type="email" required /></label>
+          <label class="field full">Street address <span>*</span><input name="input_4.1" autocomplete="street-address" required /></label>
+          <label class="field full">Address line 2<input name="input_4.2" /></label>
+          <label class="field">City <span>*</span><input name="input_4.3" autocomplete="address-level2" required /></label>
+          <label class="field">State <span>*</span><input name="input_4.4" autocomplete="address-level1" required /></label>
+          <label class="field">ZIP code <span>*</span><input name="input_4.5" autocomplete="postal-code" required /></label>
+          <h3 class="section-heading">Your appointment</h3>
+          <label class="field">Date <span>*</span><input name="input_41" placeholder="MM/DD/YYYY" inputmode="numeric" required /></label>
+          <div class="field"><label for="appointment-hour">Time <span>*</span></label><div class="time-fields"><input id="appointment-hour" name="input_42[]" type="number" min="1" max="12" placeholder="HH" required /><input name="input_42[]" type="number" min="0" max="59" placeholder="MM" required /><select name="input_42[]"><option value="am">AM</option><option value="pm">PM</option></select></div></div>
+          <label class="field">Placement on body <span>*</span><input name="input_75" required /></label>
+          <label class="field">Tattoo description <span>*</span><input name="input_67" required /></label>
+          <h3 class="section-heading">Waiver and release</h3>
+          <div class="consents full">
+            {consentItems.map(([id, heading, copy]) => <label class="check consent"><input type="checkbox" name={`input_${id}`} value={`${heading}: ${copy}`} required /><span><strong>{heading}:</strong> {copy}</span></label>)}
+          </div>
+          <label class="field full">Health information <small>Tell us anything that may affect healing, such as diabetes or blood-thinning medication.</small><textarea name="input_77"></textarea></label>
+          <label class="field">Instagram handle<input name="input_78" placeholder="@" /></label>
+          <label class="field full">Photo of your ID <span>*</span><small>Maximum file size: 50 MB.</small><input type="file" name="input_45" accept="image/*,.pdf" required /></label>
+          <label class="field full">Type your legal name to sign <span>*</span><input name="input_79" required /></label>
+        </div>
+        <div class="form-status" role="status" hidden></div>
+        <button class="button" type="submit">Submit release form</button>
+      </form>
+    </section>
+    )}
+  </div>
+
+  <script>
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...document.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+      tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
+      panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset.panel; });
+    }));
+
+    const coverChoice = document.querySelectorAll<HTMLInputElement>('input[name="input_24"]');
+    const coverUpload = document.querySelector<HTMLElement>('.conditional-upload');
+    coverChoice.forEach((choice) => choice.addEventListener('change', () => {
+      if (!coverUpload) return;
+      coverUpload.hidden = choice.value !== 'yes';
+      const input = coverUpload.querySelector<HTMLInputElement>('input');
+      if (input) input.required = choice.value === 'yes';
+    }));
+
+    document.querySelectorAll<HTMLFormElement>('[data-gravity-form]').forEach((form) => form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const id = form.dataset.gravityForm;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.querySelector<HTMLElement>('.form-status');
+      if (!id || !button || !status) return;
+      button.disabled = true;
+      status.hidden = false;
+      status.className = 'form-status';
+      status.textContent = 'Submitting securely… Large files may take a moment.';
+      try {
+        const response = await fetch(`https://anatomytattoo.com/wp-json/gf/v2/forms/${id}/submissions`, { method: 'POST', body: new FormData(form) });
+        const result = await response.json();
+        if (!response.ok || !result.is_valid) {
+          const messages = Object.values(result.validation_messages || {}).join(' ');
+          throw new Error(messages || result.message || 'Please check the form and try again.');
+        }
+        status.classList.add('success');
+        status.textContent = 'Thank you—your form was submitted to Anatomy Tattoo.';
+        form.reset();
+        button.hidden = true;
+        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (error) {
+        status.classList.add('error');
+        status.textContent = error instanceof Error ? error.message : 'Unable to submit the form. Please try again.';
+        button.disabled = false;
+      }
+    }));
+  </script>
+</SiteLayout>
+
+<style>
+  .forms-page { padding:42px 0 40px; }
+  .form-tabs { display:flex; border-bottom:1px solid var(--ink); }
+  .form-tabs button { min-width:230px; min-height:50px; padding:0 24px; border:1px solid var(--ink); border-bottom:0; border-radius:12px 12px 0 0; background:var(--white); color:var(--ink); font-weight:600; cursor:pointer; }
+  .form-tabs button+button { margin-left:-1px; }
+  .form-tabs button[aria-selected="true"] { border-color:var(--accent); background:var(--accent); color:var(--white); }
+  .form-panel { max-width:920px; margin:28px auto 0; border:1px solid var(--ink); }
+  .native-form { padding:clamp(24px,5vw,62px); }
+  .native-form>header { margin-bottom:38px; padding-bottom:24px; border-bottom:1px solid var(--line); }
+  .native-form h2 { margin:0; font:400 clamp(2.4rem,5vw,4.2rem)/1 "Instrument Serif",serif; }
+  .native-form header p { margin:12px 0 0; color:var(--muted); line-height:1.55; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:26px 22px; }
+  .full,.section-heading { grid-column:1/-1; }
+  .field>span, legend>span { color:var(--accent); }
+  .conditional-upload[hidden] { display:none; }
+  .field small { color:var(--muted); font-weight:400; line-height:1.4; }
+  fieldset { margin:0; padding:0; border:0; }
+  .choices { display:flex; gap:24px; min-height:47px; align-items:center; }
+  .choices label,.check { display:flex; align-items:flex-start; gap:10px; font-weight:400; line-height:1.5; }
+  .choices input,.check input { width:18px; height:18px; flex:0 0 18px; margin:2px 0 0; padding:0; accent-color:var(--accent); }
+  .section-heading { margin:18px 0 -4px; padding-bottom:10px; border-bottom:1px solid var(--line); font:400 2rem/1.1 "Instrument Serif",serif; }
+  .time-fields { display:grid; grid-template-columns:1fr 1fr 1.2fr; gap:8px; }
+  .consents { display:grid; gap:16px; }
+  .consent { padding:16px; border:1px solid var(--soft-line); font-size:.9rem; }
+  input[type="file"] { height:auto; min-height:47px; padding:10px; }
+  .form-status { margin:30px 0 18px; padding:14px 16px; background:var(--accent-soft); border-left:3px solid var(--accent); line-height:1.5; }
+  .form-status.error { background:#fff1f0; border-color:#b42318; color:#7a271a; }
+  .form-status.success { background:#ecfdf3; border-color:#067647; color:#05603a; }
+  button:disabled { cursor:wait; opacity:.65; }
+  @media(max-width:620px){.form-tabs{display:grid;grid-template-columns:1fr 1fr}.form-tabs button{min-width:0;padding:0 8px;font-size:.82rem}.form-tabs button+button{margin-left:-1px}.form-grid{grid-template-columns:1fr}.full,.section-heading{grid-column:auto}.native-form{padding:24px 18px}.choices{flex-wrap:wrap}}
+</style>

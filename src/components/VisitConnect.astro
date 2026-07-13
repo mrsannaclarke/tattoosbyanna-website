@@ -1,0 +1,27 @@
+---
+import InstagramLink from './InstagramLink.astro';
+---
+
+<div class="studio-details">
+  <h2>Visit and connect</h2>
+  <address><strong>At Anatomy Tattoo</strong><br />3021 NE Broadway<br />Portland, OR 97232</address>
+  <a class="detail-link" href="tel:+15032311199">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.37 2.3.56 3.6.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.6a1 1 0 0 1-.25 1.02L6.6 10.8Z"/></svg>
+    503-231-1199
+  </a>
+  <a class="detail-link" href="mailto:admin@anatomytattoo.com">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3V5Zm9 7 7-5H5l7 5Zm0 2.4L5 9.4V17h14V9.4l-7 5Z"/></svg>
+    admin@anatomytattoo.com
+  </a>
+  <InstagramLink label="handle" />
+  <p><strong>Studio days:</strong> Sunday–Wednesday<br />By appointment only</p>
+</div>
+
+<style>
+  .studio-details { padding:28px 0; display:grid; gap:13px; }
+  h2 { margin:0 0 4px; font:400 2rem/1 "Instrument Serif",serif; }
+  address { font-style:normal; line-height:1.55; }
+  p { margin:5px 0 0; line-height:1.55; }
+  .detail-link { display:flex; align-items:center; gap:10px; color:var(--accent); font-weight:600; text-decoration:none; overflow-wrap:anywhere; }
+  .detail-link svg { width:20px; height:20px; flex:0 0 20px; fill:currentColor; }
+</style>

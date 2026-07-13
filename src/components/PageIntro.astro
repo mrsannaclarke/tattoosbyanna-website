@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+
+const { title, description, artwork, artworkAlt = '', filter = 'ink-blue', artOpacity = .72, expansive = false, showArtwork = true, bordered = true, artRotation = 0 } = Astro.props;
+---
+
+<header class:list={["unified-intro", "page-shell", { expansive, bordered }]} style={`--art-opacity:${artOpacity};--art-rotation:${artRotation}deg`}>
+  {showArtwork && <div class="intro-art"><Image src={artwork} alt={artworkAlt} widths={expansive ? [480,720,1000] : [240,360]} sizes={expansive ? "min(780px, 72vw)" : "240px"} style={`filter:url(#${filter})`} /></div>}
+  <h1>{title}</h1>
+  {description && <p>{description}</p>}
+  <div class="intro-actions"><slot /></div>
+</header>
+
+<style>
+  .unified-intro { min-height:410px; padding:70px 0 58px; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; isolation:isolate; }
+  .unified-intro.bordered { border-bottom:1px solid var(--accent); }
+  .intro-art { width:390px; height:350px; position:absolute; inset:50% auto auto 50%; z-index:-1; transform:translate(-50%,-50%); display:grid; place-items:center; pointer-events:none; opacity:var(--art-opacity); }
+  .intro-art :global(picture) { display:contents; }
+  .intro-art :global(img) { position:absolute; inset:0; width:100% !important; height:100% !important; display:block; object-fit:contain; transform:rotate(var(--art-rotation)); }
+  h1 { margin:0; position:relative; z-index:1; font:400 clamp(4.25rem,7vw,6.4rem)/.92 "Instrument Serif",serif; letter-spacing:-.025em; }
+  p { max-width:720px; margin:20px auto 0; position:relative; z-index:1; font-size:1.08rem; line-height:1.6; text-shadow:0 1px 0 #fff,0 0 7px #fff,0 0 16px #fff,0 0 28px rgb(255 255 255 / 98%); }
+  .intro-actions:empty { display:none; }
+  .intro-actions { margin-top:28px; position:relative; z-index:1; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:24px; }
+  .unified-intro.expansive { min-height:calc(100vh - 88px); }
+  .expansive .intro-art { width:min(780px,72vw); height:min(720px,75vh); }
+  @media(max-width:600px){.unified-intro{min-height:350px;padding:54px 0 42px}.intro-art{width:290px;height:275px}h1{font-size:4rem}p{font-size:1rem}}
+</style>

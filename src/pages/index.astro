@@ -1,0 +1,31 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import VisitConnect from '../components/VisitConnect.astro';
+import { Image } from 'astro:assets';
+import heroArt from '../assets/payment-line-art.jpg';
+---
+
+<SiteLayout title="Tattoos by Anna — Portland tattoo artist" description="Botanical, ornamental, nature-inspired tattoos and quirky animal portraits by Portland tattoo artist Anna Clarke." current="home">
+  <div class="home-canvas">
+    <div class="home-art"><Image src={heroArt} alt="" widths={[720,1000,1400]} sizes="calc(100vw - 48px)" /></div>
+    <PageIntro title="Decorative tattoos, made for your body." description="I make botanical, ornamental, and nature-inspired tattoos, along with the occasional animal portrait, in Portland, Oregon." artwork={heroArt} artworkAlt="Floral and butterfly line artwork by Anna Clarke" filter="ink-blue" showArtwork={false} bordered={false}>
+      <a class="button" href="/booking-form/">Request a tattoo</a><a class="button secondary" href="/portfolio/">View selected work</a>
+    </PageIntro>
+    <section class="home-contact page-shell">
+      <VisitConnect />
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .home-canvas { min-height:calc(100vh - 88px); position:relative; overflow:hidden; display:flex; flex-direction:column; isolation:isolate; }
+  .home-art { position:absolute; inset:24px; z-index:0; opacity:.34; pointer-events:none; }
+  .home-art :global(picture) { display:contents; }
+  .home-art :global(img) { position:absolute; inset:0; width:100%; height:100%; display:block; object-fit:contain; object-position:center; }
+  .home-canvas :global(.unified-intro) { min-height:480px; flex:1; position:relative; z-index:1; }
+  .home-contact { padding:18px 0 8px; display:flex; justify-content:center; text-align:center; position:relative; z-index:1; }
+  .home-contact :global(.studio-details) { justify-items:center; }
+  .home-contact :global(h2), .home-contact :global(address), .home-contact :global(p), .home-contact :global(a) { text-shadow:0 1px 0 #fff,0 0 8px #fff,0 0 18px #fff,0 0 32px #fff,0 0 48px #fff; }
+  @media(max-width:600px){.home-canvas{min-height:auto}.home-canvas :global(.unified-intro){min-height:520px}.home-art{inset:16px}.home-contact{padding-top:0}}
+</style>

@@ -1,0 +1,22 @@
+---
+const { current = '' } = Astro.props;
+const nav = [
+  { label: 'About', href: '/about/', key: 'about' },
+  { label: 'Contact', href: '/contact/', key: 'contact' },
+  { label: 'Portfolio', href: '/portfolio/', key: 'portfolio' },
+  { label: 'Booking', href: '/booking-form/', key: 'booking' },
+  { label: 'Release', href: '/release-form/', key: 'release' },
+  { label: 'Payment', href: '/payment/', key: 'payment' },
+];
+---
+
+<header class="site-header">
+  <a class="site-brand" href="/" aria-current={current === 'home' ? 'page' : undefined}>Tattoos by Anna</a>
+  <nav aria-label="Primary navigation">
+    {nav.map((item) => (
+      <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>
