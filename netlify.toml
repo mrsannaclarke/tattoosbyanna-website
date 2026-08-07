@@ -3,6 +3,12 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[[redirects]]
+  from = "/portfolio 2/*"
+  to = "/portfolio/"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]

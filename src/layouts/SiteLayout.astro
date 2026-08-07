@@ -9,7 +9,13 @@ const {
   current = '',
   theme = current,
   noindex = false,
+  structuredData = null,
 } = Astro.props;
+
+const siteUrl = 'https://www.tattoosbyanna.com';
+const canonicalPath = Astro.url.pathname === '/' ? '/' : `${Astro.url.pathname.replace(/\/$/, '')}/`;
+const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+const socialImage = new URL('/assets/tba-watermark.png', siteUrl).toString();
 ---
 
 <!doctype html>
@@ -18,7 +24,23 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tattoos by Anna" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Tattoos by Anna watermark" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="theme-color" content="#1537b3" />
+
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />}
     <link rel="icon" type="image/png" href="/assets/tba-watermark.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

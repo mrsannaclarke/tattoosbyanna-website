@@ -10,7 +10,7 @@ const work = Object.entries(imageModules)
   .map(([path, module], index) => ({ path, src: module.default, index, alt: `Tattoo by Anna Clarke, portfolio image ${index + 1}` }));
 ---
 
-<SiteLayout title="Portfolio — Tattoos by Anna" description="Selected tattoo work by Portland tattoo artist Anna Clarke." current="portfolio">
+<SiteLayout title="Tattoo Portfolio | Anna Clarke, Portland" description="Explore botanical, ornamental, nature-inspired, and animal tattoos by Portland tattoo artist Anna Clarke of Tattoos by Anna." current="portfolio">
   <PageIntro title="Selected work" description="A selection of tattoos I’ve made over the years. Select any image to see it larger." artwork={introArt} artworkAlt="Decorative artwork by Anna Clarke" filter="ink-pink" />
   <div class="page-shell">
     <section class="portfolio-grid" aria-label="Tattoo portfolio">

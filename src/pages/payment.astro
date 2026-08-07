@@ -4,7 +4,7 @@ import PageIntro from '../components/PageIntro.astro';
 import introArt from '../assets/payment-intro-line-art.jpg';
 ---
 
-<SiteLayout title="Make a payment — Tattoos by Anna" description="Make a secure payment to Tattoos by Anna." current="payment">
+<SiteLayout title="Make a payment — Tattoos by Anna" description="Make a secure payment to Tattoos by Anna after confirming the details with Anna." current="payment" noindex={true}>
   <PageIntro title="Make a payment" description="Please use this page after we’ve talked about your payment. You can review the details before paying securely through Stripe." artwork={introArt} artworkAlt="Peony line artwork by Anna Clarke" filter="ink-teal" artOpacity={.48} />
   <section class="payment-layout page-shell" aria-label="Payment form">
     <div class="payment-panel" aria-labelledby="payment-heading">

@@ -12,7 +12,10 @@ const nav = [
 
 <header class="site-header">
   <a class="site-brand" href="/" aria-current={current === 'home' ? 'page' : undefined}>Tattoos by Anna</a>
-  <nav aria-label="Primary navigation">
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="primary-nav" aria-label="Primary navigation">
     {nav.map((item) => (
       <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>
         {item.label}
@@ -20,3 +23,37 @@ const nav = [
     ))}
   </nav>
 </header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = header?.querySelector<HTMLElement>('#primary-nav');
+
+  const closeMenu = () => {
+    if (!header || !toggle) return;
+    header.removeAttribute('data-menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+  };
+
+  toggle?.addEventListener('click', () => {
+    if (!header) return;
+    const open = header.toggleAttribute('data-menu-open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+
+  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('click', (event) => {
+    if (header?.hasAttribute('data-menu-open') && event.target instanceof Node && !header.contains(event.target)) closeMenu();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMenu();
+      toggle?.focus();
+    }
+  });
+  window.matchMedia('(max-width: 1024px)').addEventListener('change', (event) => {
+    if (!event.matches) closeMenu();
+  });
+</script>

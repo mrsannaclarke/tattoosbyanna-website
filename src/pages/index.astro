@@ -4,9 +4,51 @@ import PageIntro from '../components/PageIntro.astro';
 import VisitConnect from '../components/VisitConnect.astro';
 import { Image } from 'astro:assets';
 import heroArt from '../assets/payment-line-art.jpg';
+
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.tattoosbyanna.com/#website',
+      url: 'https://www.tattoosbyanna.com/',
+      name: 'Tattoos by Anna',
+      description: 'The website of Portland tattoo artist Anna Clarke.',
+      inLanguage: 'en-US',
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://www.tattoosbyanna.com/#anna-clarke',
+      name: 'Anna Clarke',
+      alternateName: 'Tattoos by Anna',
+      jobTitle: 'Tattoo artist',
+      url: 'https://www.tattoosbyanna.com/',
+      email: 'mailto:admin@anatomytattoo.com',
+      telephone: '+1-503-231-1199',
+      sameAs: ['https://www.instagram.com/tattoosbyanna/'],
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Anatomy Tattoo',
+        url: 'https://www.anatomytattoo.com/',
+      },
+      workLocation: {
+        '@type': 'Place',
+        name: 'Anatomy Tattoo',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '3021 NE Broadway',
+          addressLocality: 'Portland',
+          addressRegion: 'OR',
+          postalCode: '97232',
+          addressCountry: 'US',
+        },
+      },
+    },
+  ],
+};
 ---
 
-<SiteLayout title="Tattoos by Anna — Portland tattoo artist" description="Botanical, ornamental, nature-inspired tattoos and quirky animal portraits by Portland tattoo artist Anna Clarke." current="home">
+<SiteLayout title="Portland Tattoo Artist Anna Clarke | Tattoos by Anna" description="Botanical, ornamental, nature-inspired tattoos and quirky animal portraits by Portland tattoo artist Anna Clarke." current="home" structuredData={homeSchema}>
   <div class="home-canvas">
     <div class="home-art"><Image src={heroArt} alt="" widths={[720,1000,1400]} sizes="calc(100vw - 48px)" /></div>
     <PageIntro title="Decorative tattoos, made for your body." description="I make botanical, ornamental, and nature-inspired tattoos, along with the occasional animal portrait, in Portland, Oregon." artwork={heroArt} artworkAlt="Floral and butterfly line artwork by Anna Clarke" filter="ink-blue" showArtwork={false} bordered={false}>

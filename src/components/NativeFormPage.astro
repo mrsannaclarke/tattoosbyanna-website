@@ -10,6 +10,12 @@ const title = isBooking ? 'Booking form' : 'Release form';
 const description = isBooking
   ? 'Tell me a little about yourself and the tattoo you have in mind. Rough ideas are welcome.'
   : 'Please complete this release before your appointment. It should only take a few minutes.';
+const pageTitle = isBooking
+  ? 'Book a Tattoo with Anna Clarke | Portland'
+  : 'Tattoo Release Form — Tattoos by Anna';
+const metaDescription = isBooking
+  ? 'Request a custom tattoo appointment with Portland tattoo artist Anna Clarke. Share your idea, placement, style, and reference images.'
+  : 'Complete the Tattoos by Anna release form before your scheduled appointment.';
 const artwork = isBooking ? bookingArt : releaseArt;
 
 const consentItems = [
@@ -24,7 +30,7 @@ const consentItems = [
 ];
 ---
 
-<SiteLayout title={`${title} — Tattoos by Anna`} description={description} current={isBooking ? 'booking' : 'release'} theme={isBooking ? 'booking' : 'release'}>
+<SiteLayout title={pageTitle} description={metaDescription} current={isBooking ? 'booking' : 'release'} theme={isBooking ? 'booking' : 'release'} noindex={!isBooking}>
   <PageIntro title={title} description={description} artwork={artwork} artworkAlt="Floral line artwork by Anna Clarke" filter={isBooking ? 'ink-orange' : 'ink-green'} />
   <div class="forms-page page-shell">
     {isBooking && (
