@@ -4,7 +4,7 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "/portfolio 2/*"
+  from = "/portfolio%202/*"
   to = "/portfolio/"
   status = 301
   force = true
